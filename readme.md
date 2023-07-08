@@ -2,6 +2,18 @@
 
 Complete user API with PostgreSQL database and Kafka for event streaming
 
+## TODO
+
+- [ ] Implement Refresh Session and Token
+- [ ] Fix Delete method
+- [ ] Implement Kafka for mail sender
+- [ ] Docs
+- [ ] Improve Docker configuration
+
+## Where can this api scale to ?
+
+- Create one more entity and role for multiple login
+
 ## Tecnologies
 
 - [Go](https://go.dev/)
@@ -102,6 +114,8 @@ _Windows_
 ```sh
 $ bash .\scripts\build_docs.sh
 ```
+
+### Error Tratatives Map
 
 - 0 - 999
   HTTP Errors
