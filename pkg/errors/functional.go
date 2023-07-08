@@ -16,9 +16,21 @@ func AuthenticationError() *Error {
 	}
 }
 
+func PasswordError() *Error {
+	return &Error{
+		Code:   1002,
+		Status: http.StatusBadRequest,
+	}
+}
+
+func ValidationError() *Error {
+	return &Error{
+		Code:   1003,
+		Status: http.StatusBadRequest,
+	}
+}
+
 /*
 Adicionar mais tratativas de error
-*PasswordError
-*ValidationError
 *PaginationError
 */
