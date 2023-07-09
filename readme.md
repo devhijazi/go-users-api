@@ -9,10 +9,12 @@ Complete user API with PostgreSQL database and Kafka for event streaming
 - [ ] Implement Kafka for mail sender
 - [ ] Docs
 - [ ] Improve Docker configuration
+- [ ] Fix token session
+- [x] Implement Pagination
 
 ## Where can this api scale to ?
 
-- Create one more entity and role for multiple login
+- Create one more entity and role for multiple sessions.
 
 ## Tecnologies
 
