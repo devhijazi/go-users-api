@@ -30,7 +30,9 @@ func ValidationError() *Error {
 	}
 }
 
-/*
-Adicionar mais tratativas de error
-*PaginationError
-*/
+func PaginationError() *Error {
+	return &Error{
+		Code:   1004,
+		Status: http.StatusBadRequest,
+	}
+}
