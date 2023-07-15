@@ -17,7 +17,6 @@ type JWTClaims struct {
 var jwtToken = []byte(os.Getenv("JWT_TOKEN"))
 
 func GenerateSessionToken(id string) string {
-
 	claims := &JWTClaims{
 		ID: id,
 		StandardClaims: jwt.StandardClaims{
@@ -25,7 +24,20 @@ func GenerateSessionToken(id string) string {
 		},
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	str, _ := token.SignedString(jwtToken)
+
+	return str
+}
+
+func GenerateSessionRefreshToken() string {
+	claims := &JWTClaims{
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	str, _ := token.SignedString(jwtToken)
 
 	return str
