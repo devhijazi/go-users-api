@@ -14,9 +14,9 @@ func IsUserLoggedMiddleware(db *gorm.DB) gin.HandlerFunc {
 		userAuthenticatedId := ctx.MustGet(config.AuthenticatedEntityIdConfig).(string)
 
 		userRepository := repositories.NewUserRepository(db)
-		//refreshTokenRepository := repositories.NewRefreshTokenRepository(db)
+		refreshTokenRepository := repositories.NewRefreshTokenRepository(db)
 
-		sessionService := services.NewSessionService(userRepository)
+		sessionService := services.NewSessionService(userRepository, refreshTokenRepository)
 
 		err := sessionService.SessionVerifyIfIsUser(userAuthenticatedId)
 
