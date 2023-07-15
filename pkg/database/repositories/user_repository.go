@@ -9,8 +9,8 @@ import (
 type UserRepository interface {
 	Create(user *models.User) *models.User
 	FindAll() []*models.User
-	FindByEmail(email string) (*models.User, *errors.Error)
 	FindById(id string) (*models.User, *errors.Error)
+	FindByEmail(email string) (*models.User, *errors.Error)
 	Save(id string, user *models.User) (*models.User, *errors.Error)
 	UpdatePassword(id string, password string) *errors.Error
 	// Delete(id string) (*models.User, *errors.Error)
