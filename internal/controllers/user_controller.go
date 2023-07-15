@@ -31,6 +31,20 @@ type UserCreateResponse struct {
 	User models.User `json:"user"`
 }
 
+// @Summary	Criar usuário
+// @Description Criar um usuário.
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param full_name body string true "Nome completo"
+// @Param email body string true "E-mail"
+// @Param phone body string true "Telefone"
+// @Param birthdate body string true "Data de Nascimento"
+// @Param password body string true "Senha"
+// @Success 201 {object} UserCreateResponse
+// @Failure 400 {object} errors.Error
+// @Router /users [post]
+
 func (uc *userController) Create(ctx *gin.Context) {
 	var body *UserCreateBody
 
@@ -62,6 +76,14 @@ type UserListResponse struct {
 	Users []models.User `json:"users"`
 }
 
+// @Summary	Obter usuários
+// @Description Retorna dados de todos os usuários do sistema.
+// @Tags users
+// @Accept json
+// @Produce json
+// @Success 200 {object} UserListResponse
+// @Failure 400 {object} errors.Error
+// @Router /users [get]
 func (uc *userController) ListAll(ctx *gin.Context) {
 	userRepository := repositories.NewUserRepository(uc.db)
 
@@ -76,6 +98,16 @@ func (uc *userController) ListAll(ctx *gin.Context) {
 type userGetByIdResponse struct {
 	User models.User `json:"user"`
 }
+
+// @Summary	Obter usuário
+// @Description Retorna dados do usuário pelo Identificador.
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user_id path string true "Identificação do usuário"
+// @Success 200 {object} UserGetResponse
+// @Failure 400 {object} errors.Error
+// @Router /users/{user_id} [get]
 
 func (uc *userController) GetById(ctx *gin.Context) {
 	userID := ctx.Param("id")
