@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Complete user API with PostgreSQL database and Kafka for event streaming",
+    "title": "Users API - GoLang",
+    "termsOfService": "http://gabrielhijazi.dev/terms",
+    "contact": {
+      "name": "Gabriel Hijazi",
+      "url": "http://gabrielhijazi.dev",
+      "email": "hijazi.root@gmail.com"
+    },
+    "license": {
+      "name": "Copyright (c) Gabriel Hijazi Fraga Santos",
+      "url": "http://gabrielhijazi.dev"
+    },
+    "version": "1.0.0"
+  }
+}

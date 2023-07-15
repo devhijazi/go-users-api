@@ -1,0 +1,292 @@
+definitions:
+  controllers.RefreshSessionResponse:
+    properties:
+      session:
+        $ref: "#/definitions/services.SessionRefreshReturnData"
+    type: object
+  controllers.SessionGetEntityResponse:
+    properties:
+      user:
+        $ref: "#/definitions/models.User"
+    type: object
+  controllers.SessionUserLoginResponse:
+    properties:
+      session:
+        $ref: "#/definitions/services.SessionUserLoginReturnData"
+    type: object
+  controllers.UserCreateResponse:
+    properties:
+      user:
+        $ref: "#/definitions/models.User"
+    type: object
+  controllers.UserGetResponse:
+    properties:
+      user:
+        $ref: "#/definitions/models.User"
+    type: object
+  controllers.UserListResponse:
+    properties:
+      users:
+        items:
+          $ref: "#/definitions/models.User"
+        type: array
+    type: object
+  controllers.UserUpdateResponse:
+    properties:
+      user:
+        $ref: "#/definitions/models.User"
+    type: object
+  errors.Error:
+    properties:
+      code:
+        type: integer
+      status:
+        type: integer
+    type: object
+  services.SessionRefreshReturnData:
+    properties:
+      refresh_token:
+        type: string
+      token:
+        type: string
+    type: object
+  services.SessionUserLoginReturnData:
+    properties:
+      refresh_token:
+        type: string
+      token:
+        type: string
+      user:
+        $ref: "#/definitions/models.User"
+    type: object
+info:
+  contact:
+    email: hijazi.root@gmail.com
+    name: Gabriel Hijazi
+    url: http://support.hitechline.dev
+  description: Complete user API with PostgreSQL database and Kafka for event streaming
+  license:
+    name: Copyright (c) Gabriel Hijazi Fraga Santos
+    url: https://gabrielhijazi.dev
+  termsOfService: https://gabrielhijazi.dev/terms
+  title: Users API - GoLang
+  version: 1.0.0
+paths:
+  /me:
+    get:
+      description: Retorna dados da entidade logada.
+      produces:
+        - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: "#/definitions/controllers.SessionGetEntityResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Obter entidade logada
+      tags:
+        - me
+  /me/user:
+    patch:
+      consumes:
+        - application/json
+      description: Atualiza dados do usuário.
+      parameters:
+        - description: Nome completo
+          in: body
+          name: full_name
+          required: true
+          schema:
+            type: string
+        - description: E-mail
+          in: body
+          name: email
+          required: true
+          schema:
+            type: string
+        - description: Telefone
+          in: body
+          name: phone
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/controllers.UserUpdateResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Atualizar usuário
+      tags:
+        - me
+  /sessions/login/refresh:
+    post:
+      consumes:
+        - application/json
+      description: Recuperar sessão da entidade.
+      parameters:
+        - description: Refresh token
+          in: body
+          name: refresh_token
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/controllers.RefreshSessionResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Recuperar entidade
+      tags:
+        - sessions
+  /sessions/login/user:
+    post:
+      consumes:
+        - application/json
+      description: Criar sessão do usuário.
+      parameters:
+        - description: E-mail
+          in: body
+          name: email
+          required: true
+          schema:
+            type: string
+        - description: Password
+          in: body
+          name: password
+          required: true
+          schema:
+            type: string
+        - description: Salvar sessão
+          in: body
+          name: stay
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/controllers.SessionUserLoginResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Criar sessão do usuário
+      tags:
+        - sessions
+  /users:
+    get:
+      consumes:
+        - application/json
+      description: Retorna dados de todos os usuários do sistema.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/controllers.UserListResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Obter usuários
+      tags:
+        - users
+    post:
+      consumes:
+        - application/json
+      description: Criar um usuário.
+      parameters:
+        - description: Nome completo
+          in: body
+          name: full_name
+          required: true
+          schema:
+            type: string
+        - description: E-mail
+          in: body
+          name: email
+          required: true
+          schema:
+            type: string
+        - description: Telefone
+          in: body
+          name: phone
+          required: true
+          schema:
+            type: string
+        - description: Data de Nascimento
+          in: body
+          name: birthdate
+          required: true
+          schema:
+            type: string
+        - description: Senha
+          in: body
+          name: password
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: "#/definitions/controllers.UserCreateResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Criar usuário
+      tags:
+        - users
+  /users/{user_id}:
+    get:
+      consumes:
+        - application/json
+      description: Retorna dados do usuário pelo Identificador.
+      parameters:
+        - description: Identificação do usuário
+          in: path
+          name: user_id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/controllers.UserGetResponse"
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/errors.Error"
+      summary: Obter usuário
+      tags:
+        - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

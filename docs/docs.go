@@ -23,12 +23,468 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+      "/me": {
+          "get": {
+              "description": "Retorna dados da entidade logada.",
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "me"
+              ],
+              "summary": "Obter entidade logada",
+              "responses": {
+                  "204": {
+                      "description": "No Content",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.SessionGetEntityResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+      "/me/user": {
+          "patch": {
+              "description": "Atualiza dados do usuário.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "me"
+              ],
+              "summary": "Atualizar usuário",
+              "parameters": [
+                  {
+                      "description": "Nome completo",
+                      "name": "full_name",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "E-mail",
+                      "name": "email",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "Telefone",
+                      "name": "phone",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.UserUpdateResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+      "/sessions/login/refresh": {
+          "post": {
+              "description": "Recuperar sessão da entidade.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "sessions"
+              ],
+              "summary": "Recuperar entidade",
+              "parameters": [
+                  {
+                      "description": "Refresh token",
+                      "name": "refresh_token",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.RefreshSessionResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+      "/sessions/login/user": {
+          "post": {
+              "description": "Criar sessão do usuário.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "sessions"
+              ],
+              "summary": "Criar sessão do usuário",
+              "parameters": [
+                  {
+                      "description": "E-mail",
+                      "name": "email",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "Password",
+                      "name": "password",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "Salvar sessão",
+                      "name": "stay",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.SessionUserLoginResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+
+      "/users": {
+          "get": {
+              "description": "Retorna dados de todos os usuários do sistema.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "users"
+              ],
+              "summary": "Obter usuários",
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.UserListResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          },
+          "post": {
+              "description": "Criar um usuário.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "users"
+              ],
+              "summary": "Criar usuário",
+              "parameters": [
+                  {
+                      "description": "Nome completo",
+                      "name": "full_name",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "E-mail",
+                      "name": "email",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                    "description": "Data de Nascimento",
+                    "name": "birthdate",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "string"
+                    }
+                  },
+                  {
+                      "description": "Telefone",
+                      "name": "phone",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "description": "Senha",
+                      "name": "password",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "201": {
+                      "description": "Created",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.UserCreateResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+      "/users/{user_id}": {
+          "get": {
+              "description": "Retorna dados do usuário pelo Identificador.",
+              "consumes": [
+                  "application/json"
+              ],
+              "produces": [
+                  "application/json"
+              ],
+              "tags": [
+                  "users"
+              ],
+              "summary": "Obter usuário",
+              "parameters": [
+                  {
+                      "type": "string",
+                      "description": "Identificação do usuário",
+                      "name": "user_id",
+                      "in": "path",
+                      "required": true
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "schema": {
+                          "$ref": "#/definitions/controllers.UserGetResponse"
+                      }
+                  },
+                  "400": {
+                      "description": "Bad Request",
+                      "schema": {
+                          "$ref": "#/definitions/errors.Error"
+                      }
+                  }
+              }
+          }
+      },
+  },
+  "definitions": {
+      "controllers.RefreshSessionResponse": {
+          "type": "object",
+          "properties": {
+              "session": {
+                  "$ref": "#/definitions/services.SessionRefreshReturnData"
+              }
+          }
+      },
+      "controllers.SessionGetEntityResponse": {
+          "type": "object",
+          "properties": {
+              "user": {
+                  "$ref": "#/definitions/models.User"
+              }
+          }
+      },
+      "controllers.SessionUserLoginResponse": {
+          "type": "object",
+          "properties": {
+              "session": {
+                  "$ref": "#/definitions/services.SessionUserLoginReturnData"
+              }
+          }
+      },
+      "controllers.UserCreateResponse": {
+          "type": "object",
+          "properties": {
+              "user": {
+                  "$ref": "#/definitions/models.User"
+              }
+          }
+      },
+      "controllers.UserGetResponse": {
+          "type": "object",
+          "properties": {
+              "user": {
+                  "$ref": "#/definitions/models.User"
+              }
+          }
+      },
+      "controllers.UserListResponse": {
+          "type": "object",
+          "properties": {
+              "users": {
+                  "type": "array",
+                  "items": {
+                      "$ref": "#/definitions/models.User"
+                  }
+              }
+          }
+      },
+      "controllers.UserUpdateResponse": {
+          "type": "object",
+          "properties": {
+              "user": {
+                  "$ref": "#/definitions/models.User"
+              }
+          }
+      },
+      "errors.Error": {
+          "type": "object",
+          "properties": {
+              "code": {
+                  "type": "integer"
+              },
+              "status": {
+                  "type": "integer"
+              }
+          }
+      },
+      "models.User": {
+          "type": "object",
+          "properties": {
+              "created_at": {
+                  "type": "string"
+              },
+              "email": {
+                  "type": "string"
+              },
+              "full_name": {
+                  "type": "string"
+              },
+              "birthdate": {
+                "type": "string"
+              },
+              "id": {
+                  "type": "string"
+              },
+              "phone": {
+                  "type": "string"
+              },
+              "updated_at": {
+                  "type": "string"
+              }
+          }
+      },
+      "services.SessionRefreshReturnData": {
+          "type": "object",
+          "properties": {
+              "refresh_token": {
+                  "type": "string"
+              },
+              "token": {
+                  "type": "string"
+              }
+          }
+      },
+      "services.SessionUserLoginReturnData": {
+          "type": "object",
+          "properties": {
+              "refresh_token": {
+                  "type": "string"
+              },
+              "token": {
+                  "type": "string"
+              },
+              "user": {
+                  "$ref": "#/definitions/models.User"
+              }
+          }
+      },
+  "securityDefinitions": {
+      "ApiKeyAuth": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "in": "header"
+      }
+  }
+}
+
 }`
 
 var SwaggerInfo = &swag.Spec{
 	Version:          "0.0.1",
-	Host:             "",
+	Host:             "http://localhost",
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Users API - GoLang",

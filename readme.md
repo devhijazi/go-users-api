@@ -4,12 +4,12 @@ Complete user API with PostgreSQL database and Kafka for event streaming
 
 ## TODO
 
-- [ ] Implement Refresh Session and Token
+- [x] Implement Refresh Session and Token
 - [ ] Fix Delete method
 - [ ] Implement Kafka for mail sender
-- [ ] Docs
-- [ ] Improve Docker configuration
-- [ ] Fix token session
+- [x] Docs
+- [x] Improve Docker configuration
+- [x] Fix token session
 - [x] Implement Pagination
 
 ## Where can this api scale to ?
@@ -45,9 +45,23 @@ First, you need to create the Postgres container. To do this, run the following 
 $ docker-compose up postgres -d
 ```
 
+**Error Tratatives Map**
+
+```diff
+
+# HTTP Errors
++ 0 - 999
+
+# Functional Errors
++ 1000 - 1999
+
+# Entities Error
++ 2000 - 3999
+```
+
 ### Email Service
 
-The **API requires an email service** to function properly. Learn more at:[go-users-mailer-service]()
+Will be implemented...
 
 ### Configuring Environment Variables
 
@@ -63,11 +77,11 @@ Copy the example variables from the `.env.example` file to `.env`.
 # JWT
 + JWT_TOKEN=
 
-# KAFKA
-+ KAFKA_BROKERS=
-+ KAFKA_CLIENT_ID=
-+ KAFKA_TOPIC_ISSUE_EMAIL=
-+ KAFKA_TOPIC_EMAIL_RESPONSE=
+# KAFKA (Not Necessary Yet)
+- KAFKA_BROKERS=
+- KAFKA_CLIENT_ID=
+- KAFKA_TOPIC_ISSUE_EMAIL=
+- KAFKA_TOPIC_EMAIL_RESPONSE=
 
 # DATABASE
 + PG_USER=
@@ -116,14 +130,3 @@ _Windows_
 ```sh
 $ bash .\scripts\build_docs.sh
 ```
-
-### Error Tratatives Map
-
-- 0 - 999
-  HTTP Errors
-
-- 1000 - 1999
-  Functional Errors
-
-- 2000 - 3999
-  Entities Error
