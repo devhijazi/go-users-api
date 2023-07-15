@@ -9,7 +9,7 @@ import (
 func SessionRoutes(r *gin.Engine, db *gorm.DB) {
 	sessionController := controllers.NewSessionController(db)
 
-	sessionRoute := r.Group("/session")
+	sessionRoute := r.Group("/sessions")
 
 	sessionLoginRoute := sessionRoute.Group("/login")
 
